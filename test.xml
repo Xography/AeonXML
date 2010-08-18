@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addresses>
 
+  <!-- Just a test address entry -->
   <address id="0" status="verified">
     <name>Joe Tester</name>
     <street>Test Street 5</street>
