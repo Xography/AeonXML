@@ -3,4 +3,7 @@ A simple Expat C++ Wrapper inspired by the simplicity of ExpatMM and the design 
 AeonXML attempts to be as standalone as possible, if you want to use it, you basically just need
 to add the source and include files to your project since it ships with expat 2.0.1.
 
-Makefiles are missing at the moment. See example.cpp for example usage.
+Makefiles are missing at the moment.
+
+See example.cpp for example usage, you can use test.xml with the example program to play around 
+with the parser.

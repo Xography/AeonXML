@@ -49,8 +49,6 @@
 #if AEON_PLATFORM == AEON_WIN32
 #include <windows.h>
 	typedef SSIZE_T ssize_t;
-#elif
-	typedef size_t ssize_t;
 #endif
 
 namespace Aeon {
@@ -62,6 +60,7 @@ namespace Aeon {
 	public:
 		// Constructor which accepts own error descriptions
 		explicit SAXParserException(const std::string &desc) : description(desc) {}
+		virtual ~SAXParserException() throw() {}
 		
 		// Overriding the std::exception what
 		const char* what() const throw() { 

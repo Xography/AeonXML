@@ -26,7 +26,7 @@ public:
 
 		AttributesVector::const_iterator it;
 		for (it = vec.begin(); it != vec.end(); ++it) {
-			std::cout <<  it->key << "=\"" << it->value << "\""; 
+			std::cout <<  " " << it->key << "=\"" << it->value << "\"";
 		}
 		
 		std::cout << ">";
@@ -70,20 +70,25 @@ public:
 };
 
 // ----------------------------------------------------------------------------
-int main(void) {
+int main(int argc, char* argv[]) {
 	Aeon::SAXParser parser(new MySaxHandler());
 	
 	clock_t start = clock();
+	bool success = true;
 
 	try {
-		parser.parse("test.xml");
+		success = parser.parse(argc > 1 ? argv[1] : "test.xml");
 	} catch (Aeon::SAXParserException &e) {
 		std::cout << e.what();
 	}
+
 	std::cout << std::endl << "Parsed in " 
 		<< ((double)clock() - start) / CLOCKS_PER_SEC 
 		<< " seconds" << std::endl;
 
-	return 0;
+	if(!success)
+		return EXIT_FAILURE;
+
+	return EXIT_SUCCESS;
 }
 // ----------------------------------------------------------------------------

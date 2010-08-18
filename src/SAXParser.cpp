@@ -35,6 +35,7 @@
 * -----------------------------------------------------------------------------
 */
 #include "SAXParser.h"
+#include <string.h>
 
 namespace Aeon {
 	// ------------------------------------------------------------------------
@@ -65,23 +66,28 @@ namespace Aeon {
 	SAXParser::~SAXParser() {
 		_ready = false;
 
-		XML_ParserFree(_parser);
+		if(_parser != NULL)
+			XML_ParserFree(_parser);
 		_parser = 0;
 
-		delete _buffer;
-		_buffer = 0;
+		if(_buffer != NULL)
+			delete _buffer;
+		 _buffer = 0;
 
 		if(_file != NULL) {
 			fclose(_file);
 			_file = 0;
 		}
+
+		delete _handler;
+		_handler = 0;
 	}
 
 	// ------------------------------------------------------------------------
 	void SAXParser::bootstrap() {
 		// Allocate buffer
 		_buffer = new XML_Char[_bufsize];
-	//	memset(_buffer, 0, _bufsize * sizeof(XML_Char));
+		memset(_buffer, 0, _bufsize * sizeof(XML_Char));
 
 		// Create Parser
 		_parser = XML_ParserCreate(NULL);
@@ -178,16 +184,16 @@ namespace Aeon {
 					
 					throw SAXParserException(_fname + ": " + xmlErrorString());
 				}
-
-				// Break on successful "short read", in event of EOF
-				if(_error == XML_ERROR_FINISHED)
-					break;
 			}
+			// Break on successful "short read", in event of EOF
+			if(_error == XML_ERROR_FINISHED)
+				break;
+
 
 		}
 
 		// Finalize the parser
-		if((_status == XML_STATUS_OK) || (_status == XML_ERROR_FINISHED)) {
+		if((_status == XML_STATUS_OK) || (_error == XML_ERROR_FINISHED)) {
 			XML_Parse(_parser, _buffer, 0, XML_TRUE);
 			return true;
 		}

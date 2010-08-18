@@ -81,7 +81,7 @@ namespace Aeon {
 		 * @return the value of the attribute.
 		 */ 
 		const XMLString& get(const XMLString &key) const {
-			size_t pos = find(key);
+			int pos = find(key);
 			if(pos != -1) {
 				return vec.at(pos).value;
 			} else {
