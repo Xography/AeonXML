@@ -78,8 +78,7 @@ namespace Aeon {
 			fclose(_file);
 			_file = 0;
 		}
-
-		delete _handler;
+		
 		_handler = 0;
 	}
 
