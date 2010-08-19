@@ -70,7 +70,7 @@ namespace Aeon {
 		 */ 
 		virtual void _EndElement(const XML_Char *name) = 0;
 
-		/*
+		/**
 	     * Text handler. The string is NOT null-terminated. 
 		 * You have to use the length argument to deal with the end of the string.
 		 * A single block of contiguous text free of markup may still result in 
