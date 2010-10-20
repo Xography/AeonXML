@@ -37,6 +37,9 @@
 #ifndef _XMLAttributes_h_
 #define _XMLAttributes_h_
 #include <vector>
+#include <vector>
+#include "AeonXMLFwd.h"
+
 #include "XMLString.h"
 
 namespace Aeon {
@@ -85,11 +88,18 @@ namespace Aeon {
 			if(pos != -1) {
 				return vec.at(pos).value;
 			} else {
-				const XMLString& s("");
-				return s;
+				return empty;
 			}
 		}
+
+		const XMLString& get(const int pos) const {
+			return vec.at(pos).value;
+		}
 		
+		int size() const {
+			return vec.size();
+		}
+
 		/**
 		* Clears the attribute list.
 		*/
@@ -102,7 +112,8 @@ namespace Aeon {
 		} 
 	private:
 		AttributesVector vec;
-		
+		std::string empty;
+
 		// Used to find an element in the  list, return -1 if element is not found
 		size_t find(const XMLString &key) const {
 			size_t i = 0;

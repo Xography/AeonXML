@@ -97,24 +97,24 @@ namespace Aeon {
 		 * @param data the instruction data.
 		 */ 
 		virtual void processingInstruction(const XMLString& target,
-			const XMLString& data) = 0;
+			const XMLString& data) { }
 
 		/**
 		 * A XML Comment.
 		 *
 		 * @param data the comment's contents
 		 */ 
-		virtual void commentData(const XMLString& data) = 0;
+		virtual void commentData(const XMLString& data) { }
 
 		/**
 		 * Marks the start of a CDATA Tag.
 		 */ 
-		virtual void startCData(void) = 0;
+		virtual void startCData(void) { }
 
 		/**
 		 * Marks the end of a CDATA Tag.
 		 */ 
-		virtual void endCData(void) = 0;
+		virtual void endCData(void) { }
 
 	private:
 		XMLAttributes _attributes;

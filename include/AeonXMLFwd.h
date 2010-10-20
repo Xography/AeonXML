@@ -11,17 +11,16 @@
 *
 * -----------------------------------------------------------------------------
 */
+// Forward declarations for the Aeon Expat XML Wrapper
 #ifndef _AeonXMLFwd_h_
 #define _AeonXMLFwd_h_
 
-// Forward declarations for the Aeon Expat XML Wrapper
-
 namespace Aeon {
-	class SAXHandler;
-	class SAXHandlerAdapter;
 	class SAXHandlerInterface;
-	class SaxParser;
+	class SAXHandlerAdapter;
+	class SAXHandler;
+
+	class SAXParser;
 	class XMLAttributes;
 }
-
 #endif

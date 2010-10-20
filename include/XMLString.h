@@ -17,6 +17,12 @@
 
 namespace Aeon {
 	typedef std::string XMLString;
+
+	namespace XMLStringUtils {
+		inline bool equals(const XMLString& lhs, const XMLString& rhs) {
+			return (rhs.compare(lhs) == 0);
+		}
+	}
 }
 
 #endif

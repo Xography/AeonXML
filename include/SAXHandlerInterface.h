@@ -38,7 +38,6 @@
 #define _SAXHandlerInterface_h_
 
 #include "AeonXMLConf.h"
-#include "expat.h"
 
 namespace Aeon {
 

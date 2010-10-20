@@ -34,7 +34,9 @@
 * DEALINGS IN THE SOFTWARE.
 * -----------------------------------------------------------------------------
 */
+
 #include "SAXHandler.h"
+#include <algorithm>
 
 namespace Aeon {
 	
@@ -60,8 +62,7 @@ namespace Aeon {
 	
 	// ------------------------------------------------------------------------
 	void SAXHandler::_CharacterData(const XML_Char *s, int len) {
-		XMLString data;
-		data.append(s, len);
+		XMLString data(s, len);
 		characterData(data);
 	}
 

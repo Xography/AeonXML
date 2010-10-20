@@ -37,14 +37,17 @@
 #ifndef _SAXParser_h_
 #define _SAXParser_h_
 
+#include "AeonXMLFwd.h"
+
 #include "AeonXMLConf.h"
 #include <exception>
-#include "expat.h"
 
+#include <iosfwd>
 #include <stdio.h>
 #include <string>
-#include "SAXHandlerInterface.h"
+
 #include <stddef.h>
+#include "expat.h"
 
 #if AEON_PLATFORM == AEON_WIN32
 #include <windows.h>
@@ -52,7 +55,7 @@
 #endif
 
 namespace Aeon {
-
+	typedef char XML_Char;
 	// Quick Exception class
 	// Note: I'm not using the Framework's Exception class to enable stand-alone
 	// usage of the XML Parser Wrapper
@@ -102,6 +105,8 @@ namespace Aeon {
 		 * was reached without any errors.
 		 */ 
 		virtual bool parse(const std::string& filename);
+
+		virtual void parseString(const std::string& str);
 		
 		/**
 		 * Get the current Expat Error Code, XML_ERROR. Refer to the Expat manual 

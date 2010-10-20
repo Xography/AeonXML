@@ -36,6 +36,8 @@
 */
 #include "SAXParser.h"
 #include <string.h>
+#include "expat.h"
+#include "SAXHandlerInterface.h"
 
 namespace Aeon {
 	// ------------------------------------------------------------------------
@@ -65,9 +67,6 @@ namespace Aeon {
 	// ------------------------------------------------------------------------
 	SAXParser::~SAXParser() {
 		_ready = false;
-
-		if(_parser != NULL)
-			XML_ParserFree(_parser);
 		_parser = 0;
 
 		if(_buffer != NULL)
@@ -78,7 +77,7 @@ namespace Aeon {
 			fclose(_file);
 			_file = 0;
 		}
-		
+
 		_handler = 0;
 	}
 
@@ -153,6 +152,8 @@ namespace Aeon {
 
 	// ------------------------------------------------------------------------
 	bool SAXParser::parse(const std::string& filename) {
+		bootstrap();
+
 		// Open file
 		_fname = filename;
 		_file = fopen(_fname.c_str(), "r");
@@ -194,11 +195,49 @@ namespace Aeon {
 		// Finalize the parser
 		if((_status == XML_STATUS_OK) || (_error == XML_ERROR_FINISHED)) {
 			XML_Parse(_parser, _buffer, 0, XML_TRUE);
+			XML_ParserFree(_parser);
 			return true;
 		}
-		
+
+		XML_ParserFree(_parser);
 		// Return false in case of error
  		return false;
+	}
+	// ------------------------------------------------------------------------
+	void SAXParser::parseString(const std::string& str) {
+		bootstrap();
+
+		// Ensure that the parser is ready
+		if(_failure) {
+			throw SAXParserException("Failed to open file: "+_fname);
+		}
+
+		ssize_t _strlen = str.length();
+
+		if(!_ready)
+			throw SAXParserException("Parser not ready.");
+
+		// Loop, reading the XML source block by block 
+		if(_strlen > 0) {
+			XML_Status status = XML_Parse(_parser, str.c_str(), _strlen, XML_FALSE);
+
+			// In case of Error
+			if(status != XML_STATUS_OK) {
+				_status = status;
+				_error = XML_GetErrorCode(_parser);
+				_ready = false;
+
+				throw SAXParserException(_fname + ": " + xmlErrorString());
+			}
+		}
+
+		// Finalize the parser
+		if((_status == XML_STATUS_OK) || (_error == XML_ERROR_FINISHED)) {
+			XML_Parse(_parser, _buffer, 0, XML_TRUE);
+			XML_ParserFree(_parser);
+		} else {
+			XML_ParserFree(_parser);
+		}
 	}
 
 	// ------------------------------------------------------------------------
@@ -231,7 +270,7 @@ namespace Aeon {
 			SAXParser* self = reinterpret_cast<SAXParser*>(userData);
 
 			if (self->_handler)
-				self->_handler->_StartElement(name, atts);
+					self->_handler->_StartElement(name, atts);
 	}
 
 	// ------------------------------------------------------------------------
