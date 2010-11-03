@@ -41,22 +41,10 @@
 
 namespace Aeon {
 	// ------------------------------------------------------------------------
-	SAXParser::SAXParser(SAXHandlerInterface * handler) 
+	SAXParser::SAXParser(SAXHandlerInterface * handler, size_t chunkSize /* = EXPAT_CHUNK_SIZE */) 
 		:	_handler(handler),
 			_parser(0), 
-			_bufsize(EXPAT_CHUNK_SIZE),
-			_ready(false),
-			_failure(false),
-			_file(0),
-			_fname("") {
-		bootstrap();
-	}
-
-	// ------------------------------------------------------------------------
-	SAXParser::SAXParser(SAXHandlerInterface * handler, size_t chunkSize) 
-		:	_handler(handler),
-			_parser(0), 
-			_bufsize(chunkSize),
+			_bufsize(chunkSize), 
 			_ready(false),
 			_failure(false),
 			_file(0),

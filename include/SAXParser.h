@@ -55,6 +55,7 @@
 #endif
 
 namespace Aeon {
+
 	typedef char XML_Char;
 	// Quick Exception class
 	// Note: I'm not using the Framework's Exception class to enable stand-alone
@@ -77,14 +78,6 @@ namespace Aeon {
 	public:
 		/**
 		 * Creates a new Parser, sets up all required Handlers via bootstrapping
-		 * the System.
-		 *
-		 * @param handler The SAX Event Handler.
-		 */ 
-		SAXParser(Aeon::SAXHandlerInterface* handler);
-
-		/**
-		 * Creates a new Parser, sets up all required Handlers via bootstrapping
 		 * the System with a user-defined chunk size; the Chunk Size is the buffer
 		 * used while stream-reading the file.
 		 *
@@ -93,7 +86,7 @@ namespace Aeon {
 		 * @param chunkSize Buffer size to use while reading parsing the filestream.
 		 *
 		 */ 
-		SAXParser(Aeon::SAXHandlerInterface* handler, size_t chunkSize);
+		SAXParser(Aeon::SAXHandlerInterface* handler, size_t chunkSize = EXPAT_CHUNK_SIZE);
 		virtual ~SAXParser();
 
 		/**

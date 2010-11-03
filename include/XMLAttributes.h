@@ -37,7 +37,6 @@
 #ifndef _XMLAttributes_h_
 #define _XMLAttributes_h_
 #include <vector>
-#include <vector>
 #include "AeonXMLFwd.h"
 
 #include "XMLString.h"
